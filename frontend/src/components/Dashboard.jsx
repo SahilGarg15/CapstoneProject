@@ -109,6 +109,11 @@ export default function Dashboard({
                 setSearch(e.target.value);
                 setShowSuggestions(true);
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && search.trim() !== '') {
+                  handleSearchSubmit(search.trim().toUpperCase());
+                }
+              }}
               onFocus={() => setShowSuggestions(true)}
             />
             {showSuggestions && search && (
@@ -125,7 +130,13 @@ export default function Dashboard({
                     </button>
                   ))
                 ) : (
-                  <div style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>No tickers found</div>
+                  <button 
+                    className="suggestion-item"
+                    onClick={() => handleSearchSubmit(search.trim().toUpperCase())}
+                  >
+                    <span className="suggestion-symbol">Search for "{search.toUpperCase()}"</span>
+                    <span className="suggestion-name">Fetch live data</span>
+                  </button>
                 )}
               </div>
             )}
